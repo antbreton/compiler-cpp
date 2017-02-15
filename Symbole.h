@@ -9,7 +9,7 @@ class Symbole {
 	public :
 		Symbole (int id) : ident(id) {}
 		virtual ~Symbole() {}
-		void print() { cout << (char) ident;}
+		virtual void print() { std::cout << (char) ident;}
 		operator int () const { return ident; }
 };
 

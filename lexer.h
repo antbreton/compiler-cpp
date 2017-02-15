@@ -10,7 +10,7 @@ using namespace std;
 class lexer
 {
 	public :
-		deque<Symbole> lecture();
+		deque<Symbole*> lecture();
 		lexer(std::string flux);
 		void checkNext();
 	private :

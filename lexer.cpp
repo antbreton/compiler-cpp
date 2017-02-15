@@ -1,18 +1,17 @@
 #include "lexer.h"
 #include "Nombre.h"
-#include <stdlib.h>     /* atoi */
+#include <stdlib.h>    /* atoi */
 #include <iostream>
 #include <cstdio>
 
-deque<Symbole> lexer::lecture()
-{
-	
-	deque<Symbole> expression;
+deque<Symbole*> lexer::lecture()
+{	
+	deque<Symbole*> expression;
 		
 	while(teteLecture < line.length())
 	{		
 		next();
-		expression.push_back(*prochain);
+		expression.push_back(prochain);
 		shift();
 	}
 	return expression;
@@ -39,13 +38,11 @@ void lexer::shift()
 
 void lexer::checkNext()
 {
-	cout << endl<<"current car: " <<line[teteLecture]<< " | ";
 	//  Etape 1
 	//if( (int)*prochain == (int)'(' || (int)*prochain == (int)')'|| (int)*prochain == (int)'+'|| (int)*prochain == (int)'*')
 	if(line[teteLecture] == '(' || line[teteLecture] == ')' || line[teteLecture] == '+' || line[teteLecture] == '*')
 	{
 		prochain=new Symbole((int)line[teteLecture]);
-		cout << line[teteLecture]<< "\t";
 		return;
 	}
 	
@@ -60,7 +57,6 @@ void lexer::checkNext()
 			number+=line[teteLecture+1];
 			teteLecture++;
 		}
-		cout << atoi(number.c_str()) << "\t";
 		prochain=new Nombre(atoi(number.c_str()));
 		return;
 	}
