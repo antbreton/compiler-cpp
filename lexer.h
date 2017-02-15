@@ -12,14 +12,16 @@ class lexer
 	public :
 		deque<Symbole*> lecture();
 		lexer(std::string flux);
-		void checkNext();
+		~lexer();
+		bool checkNext();
 	private :
 		std::string line;
 		Symbole * prochain;
 		bool ok;
-		void next();
+		bool next();
 		void shift();
 		int teteLecture;
+		deque<Symbole*> expression;
 };
 
 #endif

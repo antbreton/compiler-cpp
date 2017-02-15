@@ -6,12 +6,12 @@
 
 deque<Symbole*> lexer::lecture()
 {	
-	deque<Symbole*> expression;
+	
 		
 	while(teteLecture < line.length())
 	{		
-		next();
-		expression.push_back(prochain);
+		if(next())
+			expression.push_back(prochain);
 		shift();
 	}
 	return expression;
@@ -23,27 +23,39 @@ lexer::lexer(std::string flux)
 	this->teteLecture = 0;
 }
 
-void lexer::next()
+lexer::~lexer()
 {
-	if(ok == false)
-		checkNext();	
-	ok = true;
+	deque<Symbole*>::iterator it = expression.begin();
+	
+	while (it != expression.end())
+	{		
+		delete(*it);
+		it++;
+	}
+}
+
+
+// Return true if a symbole is created.
+bool lexer::next()
+{
+		return checkNext();	
 }
 
 void lexer::shift()
 {
 	teteLecture++;
-	ok = false;
+
 }
 
-void lexer::checkNext()
+// Check the car at the read head. It creates a token if we recognize something.
+// Return true if a symbole is created. It could be false if we don't recognize any symbole that matchs with the grammar
+bool lexer::checkNext()
 {
 	//  Etape 1
-	//if( (int)*prochain == (int)'(' || (int)*prochain == (int)')'|| (int)*prochain == (int)'+'|| (int)*prochain == (int)'*')
 	if(line[teteLecture] == '(' || line[teteLecture] == ')' || line[teteLecture] == '+' || line[teteLecture] == '*')
 	{
 		prochain=new Symbole((int)line[teteLecture]);
-		return;
+		return true;
 	}
 	
 	// Etape 2
@@ -58,14 +70,16 @@ void lexer::checkNext()
 			teteLecture++;
 		}
 		prochain=new Nombre(atoi(number.c_str()));
-		return;
+		return true;
 	}
 	// Etape 3
 	if(line[teteLecture] == EOF)
 	{
 		prochain=new Symbole((int)'$');
-		return;
+		return true;
 	}
-	cout << "lex erreur at : "<< line[teteLecture]<< "\t";
+	cout << "\tlex erreur at : "<< line[teteLecture]<<endl;
+
+	return false;
 }
 
