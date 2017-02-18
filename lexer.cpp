@@ -6,8 +6,7 @@
 
 deque<Symbole*> lexer::lecture()
 {	
-	
-		
+			
 	while(teteLecture < line.length())
 	{		
 		if(next())

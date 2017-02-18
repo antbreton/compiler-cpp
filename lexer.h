@@ -14,6 +14,7 @@ class lexer
 		lexer(std::string flux);
 		~lexer();
 		bool checkNext();
+		
 	private :
 		std::string line;
 		Symbole * prochain;

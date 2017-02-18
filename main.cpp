@@ -1,13 +1,18 @@
-// TODO DISPLAY DEQUE BY MODIFING THE PRINTS METHODS
+
 using namespace std;
-#include "lexer.h"
+
 #include <iostream>
 #include <deque>
+
+#include "lexer.h"
 #include "Symbole.h"
+#include "Automate.h"
+
 
 //Prototypes--
 void displaySymboles(deque<Symbole*> q);
 // -----------
+
 
 // Entrypoint of the program, it executes the differents steps : lexer, 
 int main(int argv, char ** args)
@@ -20,9 +25,13 @@ int main(int argv, char ** args)
 	lexer l(line);
 	deque<Symbole*> q = l.lecture();	
 	displaySymboles(q);
-
-	
 	cout << endl;
+	
+	cout << "Step 2 : Synthaxical analysis" << endl;
+	Automate automate(&q);
+	automate.analyse();
+	
+	
 	return 0;
 }
 
