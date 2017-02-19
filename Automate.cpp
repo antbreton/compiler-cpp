@@ -20,6 +20,7 @@ Automate::Automate(deque<Symbole*>* lexeurSymboleStack):lexeurSymboleStack(lexeu
 {
 		symboleStack = new deque<Symbole*>;
 		stateStack   = new deque<Etat*>;
+		erreur 			 = false;
 }
 
 // Deux opérations de l'automates

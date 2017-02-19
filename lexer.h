@@ -19,7 +19,7 @@ class lexer
 	private :
 		std::string line;
 		Symbole * prochain;
-		int nbError = 0;
+		int nbError;
 		bool next();
 		void shift();
 		int teteLecture;

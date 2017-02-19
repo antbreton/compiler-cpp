@@ -19,6 +19,7 @@ deque<Symbole*>* lexer::lecture()
 
 lexer::lexer(std::string flux)
 {
+	nbError = 0;
 	expression = new deque<Symbole*>();
 	this->line = flux;
 	this->teteLecture = 0;

@@ -23,7 +23,7 @@ class Automate
 		void pop_destroy_symbol();
 		
 		// Status de l'analyse synthaxique
-		bool erreur = false;
+		bool erreur;
 		
 		// Fonction qui effectue l'analyse syntaxique
 		bool analyse();
