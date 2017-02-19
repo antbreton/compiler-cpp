@@ -25,7 +25,7 @@ int main(int argv, char ** args)
 	lexer l(line);
 	deque<Symbole*> q = l.lecture();	
 	displaySymboles(q);
-	cout << endl;
+	cout << endl<<endl;
 	
 	cout << "Step 2 : Synthaxical analysis" << endl;
 	Automate automate(&q);
