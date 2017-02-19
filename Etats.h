@@ -18,7 +18,7 @@ class Etat
 };
 
 
-// Définitions des classes d'états
+// Definitions of classes of the different states
 class E0: public Etat
 {
 	public :

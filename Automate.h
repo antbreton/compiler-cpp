@@ -9,33 +9,33 @@ class Etat;
 class Automate
 {
 	public :
-		// Constructeur normal
+		// Regular constructor
 		Automate(std::deque<Symbole*>* lexeurSymboleStack);
-		
-		// Deux opérations de l'automates
+
+		// The two operations of the automate
 		bool decalage(Symbole *s, Etat *e);
 		bool reduction(int n, Symbole *s);
-		
-		// Cette fonction permet de r'ajouter un symbole dans le lexer.
+
+		// This function allow you to add a symbol into the lexer.
 		void push_lexer(Symbole *s);
 		Symbole* pop_lexer();
 		Symbole* pop_symbol();
 		void pop_destroy_symbol();
-		
-		// Status de l'analyse synthaxique
+
+		// Status of the syntactic analysis
 		bool erreur;
-		
-		// Fonction qui effectue l'analyse syntaxique
+
+		// Function who does the syntactic analysis
 		bool analyse();
 		void calculate();
-		
-		// Affiche la pile d'etats sur cout
+
+		// Display the stake of states on cout
 		void displayState();
 	private :
 		std::deque<Symbole*>* symboleStack;
-		std::deque<Symbole*>* lexeurSymboleStack;		
+		std::deque<Symbole*>* lexeurSymboleStack;
 		std::deque<Etat*>* stateStack;
-		
+
 };
 
 #endif
