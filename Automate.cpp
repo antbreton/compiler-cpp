@@ -25,7 +25,7 @@ Automate::Automate(deque<Symbole*>* lexeurSymboleStack):lexeurSymboleStack(lexeu
 // Deux opérations de l'automates
 bool Automate::decalage(Symbole *s, Etat *e)
 {
-	cout << "decalage"<<endl;
+	cout <<setw(40)<<left<< "decalage"<<endl;
 	symboleStack->push_back(s);
 	stateStack->push_back(e);
 	return true;
@@ -33,6 +33,7 @@ bool Automate::decalage(Symbole *s, Etat *e)
 
 bool Automate::reduction(int n, Symbole *s)
 {
+	cout <<setw(40)<<left<< "reduction"<<endl;
 	for(int i=0;i<n;i++)
 	{
 		stateStack->pop_back();
@@ -57,7 +58,7 @@ bool Automate::analyse()
 
 	stateStack->push_back(new E0); 	// on ajoute l'etat 0
 
-	cout << endl <<'\t'<<setw(20)<<left<< "state" <<setw(20)<<left<<"symbols" <<setw(20)<<left<<"lexer" <<setw(20)<<left<<"rule"<<endl;
+	cout << endl <<'\t'<<setw(40)<<left<< "state" <<setw(40)<<left<<"symbols" <<setw(40)<<left<<"lexer" <<setw(40)<<left<<"rule"<<endl;
 
 	while(!lexeurSymboleStack->empty() && !erreur )		// tant que le lexeur n'est pas vide et qu'il n'y à pas d'erreur
 	{			
@@ -68,11 +69,12 @@ bool Automate::analyse()
 		accepted=(stateStack->back())->transitions(this, pop_lexer()); 
 	}
 	
+	// Affichage des résultats.
 	if(erreur)
-		cout << endl << endl << RED << "Error !" << RESET <<endl<<endl;
+		cout << endl << endl << RED << "\tError !" << RESET <<endl<<endl;
 
 	if(accepted)
-		cout << endl << endl << GREEN << "Accepted" << RESET << endl<<endl;
+		cout << endl << endl << GREEN << "\tAccepted" << RESET << endl<<endl;
 				
 	return accepted;
 }
@@ -98,14 +100,14 @@ void Automate::pop_destroy_symbol()
 
 void Automate::calculate()
 {
-	cout << GREEN << "\tResult :" << ((Expr *) symboleStack->front())->eval()<<RESET << endl ;
+	cout << endl<< GREEN << "\tResult :" << ((Expr *) symboleStack->front())->eval()<<RESET << endl <<endl ;
 }		
 
 // Display state of the controller
 void Automate::displayState()
 {
 	deque<Etat*>::iterator it = stateStack->begin();
-	cout<<'\t'<<setw(20)<<left;
+	cout<<'\t'<<setw(40)<<left;
 	
 	string states="";
 	string symboles="";
@@ -119,7 +121,7 @@ void Automate::displayState()
 	cout << states;
 	
 	deque<Symbole*>::iterator itt = symboleStack->begin();
-	cout<<setw(20)<<left;
+	cout<<setw(40)<<left;
 	
 	while (itt != symboleStack->end())
 	{		
@@ -130,7 +132,7 @@ void Automate::displayState()
 	cout << symboles;
 	
 	deque<Symbole*>::iterator ittt = lexeurSymboleStack->begin();
-	cout<<setw(20)<<left;
+	cout<<setw(40)<<left;
 	
 	while (ittt != lexeurSymboleStack->end())
 	{		
@@ -139,7 +141,5 @@ void Automate::displayState()
 	}
 	
 	cout << lexs;
-	
-	cout<<setw(20)<<left;
 }
 

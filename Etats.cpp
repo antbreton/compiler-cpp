@@ -91,7 +91,6 @@ bool E3::transitions(Automate * automate, Symbole * s)
 				
 				Nombre * n = (Nombre *)automate->pop_symbol();
 				
-				cout << "reduction" << endl;
 				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 				automate->reduction(1, new ExprVal(n->getValue()));
 				break;	
@@ -102,7 +101,6 @@ bool E3::transitions(Automate * automate, Symbole * s)
 				
 				Nombre * n = (Nombre *)automate->pop_symbol();
 				
-				cout << "reduction" << endl;
 				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 				automate->reduction(1, new ExprVal(n->getValue()));
 				break;	
@@ -112,8 +110,7 @@ bool E3::transitions(Automate * automate, Symbole * s)
 				automate->push_lexer(s);
 				
 				Nombre * n = (Nombre *)automate->pop_symbol();
-				
-				cout << "reduction" << endl;
+
 				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 				automate->reduction(1, new ExprVal(n->getValue()));
 				break;	
@@ -124,7 +121,6 @@ bool E3::transitions(Automate * automate, Symbole * s)
 				
 				Nombre * n = (Nombre *)automate->pop_symbol();
 				
-				cout << "reduction" << endl;
 				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 				automate->reduction(1, new ExprVal(n->getValue()));
 				break;		
@@ -224,8 +220,7 @@ bool E7::transitions(Automate * automate, Symbole * s)
 			Expr * e1 = (Expr *) automate->pop_symbol(); 
 			automate->pop_destroy_symbol();
 			Expr * e2 = (Expr *)automate->pop_symbol(); 
-			
-			cout << "reduction" << endl;
+
 			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 			automate->reduction(3, new ExprPlus(e1,e2));
 			break;	
@@ -248,7 +243,6 @@ bool E7::transitions(Automate * automate, Symbole * s)
 			automate->pop_destroy_symbol();
 			Expr * e2 = (Expr *)automate->pop_symbol(); 
 			
-			cout << "reduction" << endl;
 			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 			automate->reduction(3, new ExprPlus(e1,e2));
 			break;
@@ -263,8 +257,7 @@ bool E7::transitions(Automate * automate, Symbole * s)
 			Expr * e1 = (Expr *) automate->pop_symbol(); 
 			automate->pop_destroy_symbol();
 			Expr * e2 = (Expr *)automate->pop_symbol(); 
-			
-			cout << "reduction" << endl;
+
 			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 			automate->reduction(3, new ExprPlus(e1,e2));			
 			break;
@@ -286,16 +279,11 @@ bool E8::transitions(Automate * automate, Symbole * s)
 		{		// REDUCTION 3
 			// on ne consume pas le symbole
 			automate->push_lexer(s);
-			cout << ".";
 			// On construit l'epression addition // E*E
 			Expr * e1 = (Expr *) automate->pop_symbol(); 
-			cout << ".";
 			automate->pop_destroy_symbol();
-			cout << ".";
 			Expr * e2 = (Expr *)automate->pop_symbol(); 
-			cout << ".";
-			
-			cout << "reduction" << endl;
+
 			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 			automate->reduction(3, new ExprMul(e1,e2));		
 			break;	
@@ -311,7 +299,6 @@ bool E8::transitions(Automate * automate, Symbole * s)
 			automate->pop_destroy_symbol();
 			Expr * e2 = (Expr *)automate->pop_symbol(); 
 			
-			cout << "reduction" << endl;
 			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 			automate->reduction(3, new ExprMul(e1,e2));		
 			break;	
@@ -327,7 +314,6 @@ bool E8::transitions(Automate * automate, Symbole * s)
 			automate->pop_destroy_symbol();
 			Expr * e2 = (Expr *)automate->pop_symbol(); 
 			
-			cout << "reduction" << endl;
 			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 			automate->reduction(3, new ExprMul(e1,e2));		
 			break;	
@@ -342,7 +328,7 @@ bool E8::transitions(Automate * automate, Symbole * s)
 			automate->pop_destroy_symbol();
 			Expr * e2 = (Expr *)automate->pop_symbol(); 
 			
-			cout << "reduction" << endl;
+
 			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 			automate->reduction(3, new ExprMul(e1,e2));		
 			break;	
@@ -369,8 +355,6 @@ bool E9::transitions(Automate * automate, Symbole * s)
 			Expr * e = (Expr *) automate->pop_symbol(); 
 			automate->pop_destroy_symbol();
 
-			
-			cout << "reduction" << endl;
 			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 			automate->reduction(3, e);		
 			break;	
@@ -386,8 +370,6 @@ bool E9::transitions(Automate * automate, Symbole * s)
 			Expr * e = (Expr *) automate->pop_symbol(); 
 			automate->pop_destroy_symbol();
 
-			
-			cout << "reduction" << endl;
 			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 			automate->reduction(3, e);		
 			break;	
@@ -403,8 +385,6 @@ bool E9::transitions(Automate * automate, Symbole * s)
 			Expr * e = (Expr *) automate->pop_symbol(); 
 			automate->pop_destroy_symbol();
 
-			
-			cout << "reduction" << endl;
 			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 			automate->reduction(3, e);		
 			break;	
@@ -420,8 +400,6 @@ bool E9::transitions(Automate * automate, Symbole * s)
 			Expr * e = (Expr *) automate->pop_symbol(); 
 			automate->pop_destroy_symbol();
 
-			
-			cout << "reduction" << endl;
 			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
 			automate->reduction(3, e);		
 			break;	
