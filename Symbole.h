@@ -10,6 +10,7 @@ class Symbole {
 		Symbole (int id) : ident(id) {}
 		virtual ~Symbole() {}
 		virtual void print() { std::cout << (char) ident;}
+		virtual std::string getPrint() { std::string res=""; return res+((char) ident);}
 		operator int () const { return ident; }
 };
 
@@ -19,6 +20,7 @@ class Nombre : public Symbole {
 	public :
 		Nombre (int valeur) : Symbole((int)'n'), value(valeur) {}
 		void print() { std::cout << value;}
+	//	virtual std::string getPrint() { std::string res=""+value; return res;}
 };
 
 class Expr : public Symbole {
@@ -27,15 +29,25 @@ class Expr : public Symbole {
 		virtual ~Expr() {}	
 };
 
-/*
+
 class ExprPlus : public Expr
 {
+	protected:
+		Expr * e1;
+		Expr * e2;
+		
+	public:
+		ExprPlus(Expr *e1,Expr *e2): e1(e1), e2(e2) {}
+};
 
-};*/
-
-class ExprParanthese : public Expr
+class ExprMul : public Expr
 {
-
+	protected:
+		Expr * e1;
+		Expr * e2;
+		
+	public:
+		ExprMul(Expr *e1,Expr *e2): e1(e1), e2(e2) {}
 };
 
 #endif

@@ -85,20 +85,44 @@ bool E3::transitions(Automate * automate, Symbole * s)
 	switch(*s)
 		{
 			case (int)'+':
-				automate->decalage(s, new E4);
+				// on ne consume pas le symbole
+				automate->push_lexer(s);
+				
+				automate->pop_destroy_symbol();
+				
+				cout << "reduction" << endl;
+				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+				automate->reduction(1, new Expr);
 			break;	
 
 			case (int)'*':
-				automate->decalage(s, new E5);
+				// on ne consume pas le symbole
+				automate->push_lexer(s);
+				
+				automate->pop_destroy_symbol();
+				
+				cout << "reduction" << endl;
+				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+				automate->reduction(1, new Expr);
 			break;	
 		
 			case (int)')':
-				automate->decalage(s, new E4);
+				// on ne consume pas le symbole
+				automate->push_lexer(s);
+				
+				
+				automate->pop_destroy_symbol();
+				
+				cout << "reduction" << endl;
+				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+				automate->reduction(1, new Expr);
 			break;	
 			
 			case (int)'$':
 				// on ne consume pas le symbole
 				automate->push_lexer(s);
+				
+				automate->pop_destroy_symbol();
 				
 				cout << "reduction" << endl;
 				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
@@ -174,7 +198,7 @@ bool E6::transitions(Automate * automate, Symbole * s)
 			automate->decalage(s, new E5);
 		break;	
 		
-		case (int)')': // si on tombe sur le $ final, on accepte l'expression.
+		case (int)')':
 			automate->decalage(s, new E9);
 		break;	
 								
@@ -185,6 +209,227 @@ bool E6::transitions(Automate * automate, Symbole * s)
 	return false;
 }
 
-bool E7::transitions(Automate * automate, Symbole * s){	false;}
-bool E8::transitions(Automate * automate, Symbole * s){	false;}
-bool E9::transitions(Automate * automate, Symbole * s){	false;}
+bool E7::transitions(Automate * automate, Symbole * s)
+{
+	switch(*s)
+	{
+		case (int)'+':
+		{
+		// REDUCTION 2
+			// on ne consume pas le symbole
+			automate->push_lexer(s);
+			
+			// On construit l'epression addition // E+E
+			Expr * e1 = (Expr *) automate->pop_symbol(); 
+			automate->pop_destroy_symbol();
+			Expr * e2 = (Expr *)automate->pop_symbol(); 
+			
+			cout << "reduction" << endl;
+			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+			automate->reduction(3, new ExprPlus(e1,e2));
+			break;	
+		}
+		
+		case (int)'*':
+		{	
+			automate->decalage(s, new E5);
+			break;	
+		}
+		
+		case (int)')':
+		{
+		// REDUCTION 2
+			// on ne consume pas le symbole
+			automate->push_lexer(s);
+			
+			// On construit l'epression addition // E+E
+			Expr * e1 = (Expr *) automate->pop_symbol(); 
+			automate->pop_destroy_symbol();
+			Expr * e2 = (Expr *)automate->pop_symbol(); 
+			
+			cout << "reduction" << endl;
+			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+			automate->reduction(3, new ExprPlus(e1,e2));
+			break;
+		}
+		
+		case (int)'$':
+		{		// REDUCTION 2
+			// on ne consume pas le symbole
+			automate->push_lexer(s);
+			
+			// On construit l'epression addition // E+E
+			Expr * e1 = (Expr *) automate->pop_symbol(); 
+			automate->pop_destroy_symbol();
+			Expr * e2 = (Expr *)automate->pop_symbol(); 
+			
+			cout << "reduction" << endl;
+			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+			automate->reduction(3, new ExprPlus(e1,e2));			
+			break;
+		}
+							
+		default:
+			automate->erreur = true;
+		break;
+	}	
+	return false;
+}
+
+
+bool E8::transitions(Automate * automate, Symbole * s)
+{
+	switch(*s)
+	{
+		case (int)'+':
+		{		// REDUCTION 3
+			// on ne consume pas le symbole
+			automate->push_lexer(s);
+			cout << ".";
+			// On construit l'epression addition // E*E
+			Expr * e1 = (Expr *) automate->pop_symbol(); 
+			cout << ".";
+			automate->pop_destroy_symbol();
+			cout << ".";
+			Expr * e2 = (Expr *)automate->pop_symbol(); 
+			cout << ".";
+			
+			cout << "reduction" << endl;
+			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+			automate->reduction(3, new ExprMul(e1,e2));		
+			break;	
+		}
+
+		case (int)'*':
+		{		// REDUCTION 3
+			// on ne consume pas le symbole
+			automate->push_lexer(s);
+			
+			// On construit l'epression addition // E*E
+			Expr * e1 = (Expr *) automate->pop_symbol(); 
+			automate->pop_destroy_symbol();
+			Expr * e2 = (Expr *)automate->pop_symbol(); 
+			
+			cout << "reduction" << endl;
+			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+			automate->reduction(3, new ExprMul(e1,e2));		
+			break;	
+		}
+		
+		case (int)')':
+		{		// REDUCTION 3
+			// on ne consume pas le symbole
+			automate->push_lexer(s);
+			
+			// On construit l'epression addition // E*E
+			Expr * e1 = (Expr *) automate->pop_symbol(); 
+			automate->pop_destroy_symbol();
+			Expr * e2 = (Expr *)automate->pop_symbol(); 
+			
+			cout << "reduction" << endl;
+			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+			automate->reduction(3, new ExprMul(e1,e2));		
+			break;	
+		}
+		case (int)'$':
+		{		// REDUCTION 3
+			// on ne consume pas le symbole
+			automate->push_lexer(s);
+			
+			// On construit l'epression addition // E*E
+			Expr * e1 = (Expr *) automate->pop_symbol(); 
+			automate->pop_destroy_symbol();
+			Expr * e2 = (Expr *)automate->pop_symbol(); 
+			
+			cout << "reduction" << endl;
+			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+			automate->reduction(3, new ExprMul(e1,e2));		
+			break;	
+		}			
+							
+		default:
+			automate->erreur = true;
+		break;
+	}	
+	return false;
+}
+
+bool E9::transitions(Automate * automate, Symbole * s)
+{
+	switch(*s)
+	{
+		case (int)'+':
+		{		// REDUCTION 4
+			// on ne consume pas le symbole
+			automate->push_lexer(s);
+			
+			// On construit l'epression addition // (E)
+			automate->pop_destroy_symbol();
+			Expr * e = (Expr *) automate->pop_symbol(); 
+			automate->pop_destroy_symbol();
+
+			
+			cout << "reduction" << endl;
+			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+			automate->reduction(3, e);		
+			break;	
+		}
+		
+		case (int)'*':
+		{		// REDUCTION 4
+			// on ne consume pas le symbole
+			automate->push_lexer(s);
+			
+			// On construit l'epression addition // (E)
+			automate->pop_destroy_symbol();
+			Expr * e = (Expr *) automate->pop_symbol(); 
+			automate->pop_destroy_symbol();
+
+			
+			cout << "reduction" << endl;
+			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+			automate->reduction(3, e);		
+			break;	
+		}
+		
+		case (int)')':
+		{		// REDUCTION 4
+			// on ne consume pas le symbole
+			automate->push_lexer(s);
+			
+			// On construit l'epression addition // (E)
+			automate->pop_destroy_symbol();
+			Expr * e = (Expr *) automate->pop_symbol(); 
+			automate->pop_destroy_symbol();
+
+			
+			cout << "reduction" << endl;
+			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+			automate->reduction(3, e);		
+			break;	
+		}
+
+		case (int)'$':
+		{		// REDUCTION 4
+			// on ne consume pas le symbole
+			automate->push_lexer(s);
+			
+			// On construit l'epression addition // (E)
+			automate->pop_destroy_symbol();
+			Expr * e = (Expr *) automate->pop_symbol(); 
+			automate->pop_destroy_symbol();
+
+			
+			cout << "reduction" << endl;
+			// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
+			automate->reduction(3, e);		
+			break;	
+		}			
+							
+		default:
+			automate->erreur = true;
+		break;
+	}	
+	return false;
+}
+

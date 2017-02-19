@@ -1,7 +1,19 @@
 using namespace std;
 
+// Defines
+#define RED     "\033[31m"      /* Red */
+#define GREEN   "\033[32m"      /* Green */
+#define RESET   "\033[0m"
+
+// Includes persoss
 #include "Automate.h"
 #include "Etats.h"
+
+// Includes STD
+#include <iomanip>      // std::setw
+
+
+
 
 // Constructeur
 Automate::Automate(deque<Symbole*>* lexeurSymboleStack):lexeurSymboleStack(lexeurSymboleStack)
@@ -21,15 +33,9 @@ bool Automate::decalage(Symbole *s, Etat *e)
 
 bool Automate::reduction(int n, Symbole *s)
 {
-	cout << "new symb :" ; 
-	s->print();
-	cout <<endl;
-	
 	for(int i=0;i<n;i++)
 	{
-		delete(stateStack->back());
 		stateStack->pop_back();
-		symboleStack->pop_back();
 	}
 	lexeurSymboleStack->push_front(s);
 	return true;
@@ -49,9 +55,9 @@ bool Automate::analyse()
 {
 	bool accepted = false;
 
-	stateStack->push_back(new E0); 													// on ajoute l'etat 0
+	stateStack->push_back(new E0); 	// on ajoute l'etat 0
 
-	int test;
+	cout << endl <<'\t'<<setw(20)<<left<< "state" <<setw(20)<<left<<"symbols" <<setw(20)<<left<<"lexer" <<setw(20)<<left<<"rule"<<endl;
 
 	while(!lexeurSymboleStack->empty() && !erreur )		// tant que le lexeur n'est pas vide et qu'il n'y à pas d'erreur
 	{			
@@ -60,15 +66,13 @@ bool Automate::analyse()
 		// On demande à l'état en haut de la pile de considérer
 		// ses transitions avec le symbole de haut de pile.
 		accepted=(stateStack->back())->transitions(this, pop_lexer()); 
-		
-		cin >> test;
 	}
 	
 	if(erreur)
-		cout << "Erreur !" << endl;
+		cout << endl << endl << RED << "Error !" << RESET <<endl<<endl;
 
 	if(accepted)
-		cout << "Accepted" << endl;
+		cout << endl << endl << GREEN << "Accepted" << RESET << endl<<endl;
 				
 	return true;
 }
@@ -79,40 +83,60 @@ void Automate::push_lexer(Symbole *s)
 	lexeurSymboleStack->push_front(s);
 }
 
+Symbole* Automate::pop_symbol()
+{
+	Symbole * poped =symboleStack->back();	
+	symboleStack->pop_back();
+	return poped;
+}
+
+void Automate::pop_destroy_symbol()
+{
+	delete(symboleStack->back());
+	symboleStack->pop_back();
+}
+
+		
 
 // Display state of the controller
 void Automate::displayState()
 {
 	deque<Etat*>::iterator it = stateStack->begin();
-	cout << "\tstates stack : ";
+	cout<<'\t'<<setw(20)<<left;
+	
+	string states="";
+	string symboles="";
+	string lexs="";
 	
 	while (it != stateStack->end())
 	{		
-		cout << (**it).getName() << " ";
+		states+= (**it).getName()+" ";
 		it++;
 	}
+	cout << states;
 	
 	deque<Symbole*>::iterator itt = symboleStack->begin();
-	cout << endl << "\tsymbole stack : ";
+	cout<<setw(20)<<left;
 	
 	while (itt != symboleStack->end())
 	{		
-		(**itt).print();
-		cout<< " ";
+		symboles+= (**itt).getPrint()+" ";
 		itt++;
 	}
 	
+	cout << symboles;
 	
 	deque<Symbole*>::iterator ittt = lexeurSymboleStack->begin();
-	cout << endl << "\tlexer : ";
+	cout<<setw(20)<<left;
 	
 	while (ittt != lexeurSymboleStack->end())
 	{		
-		(**ittt).print();
-		cout<< " ";
+		lexs+=(**ittt).getPrint()+" ";
 		ittt++;
 	}
 	
-	cout << endl;
+	cout << lexs;
+	
+	cout<<setw(20)<<left;
 }
 

@@ -19,6 +19,8 @@ class Automate
 		// Cette fonction permet de r'ajouter un symbole dans le lexer.
 		void push_lexer(Symbole *s);
 		Symbole* pop_lexer();
+		Symbole* pop_symbol();
+		void pop_destroy_symbol();
 		
 		// Status de l'analyse synthaxique
 		bool erreur = false;

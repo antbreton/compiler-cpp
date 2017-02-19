@@ -3,13 +3,15 @@
 #include <iostream>
 #include <cstdio>
 
-deque<Symbole*> lexer::lecture()
+deque<Symbole*>* lexer::lecture()
 {	
-			
+	if(line[line.length()-1] != '$')
+		line.append("$");
+		
 	while(teteLecture < line.length())
 	{		
 		if(next())
-			expression.push_back(prochain);
+			expression->push_back(prochain);
 		shift();
 	}
 	return expression;
@@ -17,15 +19,16 @@ deque<Symbole*> lexer::lecture()
 
 lexer::lexer(std::string flux)
 {
+	expression = new deque<Symbole*>();
 	this->line = flux;
 	this->teteLecture = 0;
 }
 
 lexer::~lexer()
 {
-	deque<Symbole*>::iterator it = expression.begin();
+	deque<Symbole*>::iterator it = expression->begin();
 	
-	while (it != expression.end())
+	while (it != expression->end())
 	{		
 		delete(*it);
 		it++;
@@ -71,11 +74,13 @@ bool lexer::checkNext()
 		return true;
 	}
 	// Etape 3
-	if(line[teteLecture] == EOF || line[teteLecture] == '$')
+	if(line[teteLecture] == EOF || line[teteLecture] == '$' || line[teteLecture] == '\0')
 	{
 		prochain=new Symbole((int)'$');
 		return true;
 	}
+	nbError++;
+	
 	cout << "\tlex erreur at : "<< line[teteLecture]<<endl;
 
 	return false;
