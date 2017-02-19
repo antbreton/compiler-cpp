@@ -1,18 +1,17 @@
 #include "lexer.h"
-#include "Nombre.h"
-#include <stdlib.h>     /* atoi */
+#include <stdlib.h>    /* atoi */
 #include <iostream>
 #include <cstdio>
 
-deque<Symbole> lexer::lecture()
-{
-	
-	deque<Symbole> expression;
+deque<Symbole*>* lexer::lecture()
+{	
+	if(line[line.length()-1] != '$')
+		line.append("$");
 		
 	while(teteLecture < line.length())
 	{		
-		next();
-		expression.push_back(*prochain);
+		if(next())
+			expression->push_back(prochain);
 		shift();
 	}
 	return expression;
@@ -20,33 +19,45 @@ deque<Symbole> lexer::lecture()
 
 lexer::lexer(std::string flux)
 {
+	nbError = 0;
+	expression = new deque<Symbole*>();
 	this->line = flux;
 	this->teteLecture = 0;
 }
 
-void lexer::next()
+lexer::~lexer()
 {
-	if(ok == false)
-		checkNext();	
-	ok = true;
+	deque<Symbole*>::iterator it = expression->begin();
+	
+	while (it != expression->end())
+	{		
+		delete(*it);
+		it++;
+	}
+}
+
+
+// Return true if a symbole is created.
+bool lexer::next()
+{
+		return checkNext();	
 }
 
 void lexer::shift()
 {
 	teteLecture++;
-	ok = false;
+
 }
 
-void lexer::checkNext()
+// Check the car at the read head. It creates a token if we recognize something.
+// Return true if a symbole is created. It could be false if we don't recognize any symbole that matchs with the grammar
+bool lexer::checkNext()
 {
-	cout << endl<<"current car: " <<line[teteLecture]<< " | ";
 	//  Etape 1
-	//if( (int)*prochain == (int)'(' || (int)*prochain == (int)')'|| (int)*prochain == (int)'+'|| (int)*prochain == (int)'*')
 	if(line[teteLecture] == '(' || line[teteLecture] == ')' || line[teteLecture] == '+' || line[teteLecture] == '*')
 	{
 		prochain=new Symbole((int)line[teteLecture]);
-		cout << line[teteLecture]<< "\t";
-		return;
+		return true;
 	}
 	
 	// Etape 2
@@ -60,16 +71,19 @@ void lexer::checkNext()
 			number+=line[teteLecture+1];
 			teteLecture++;
 		}
-		cout << atoi(number.c_str()) << "\t";
 		prochain=new Nombre(atoi(number.c_str()));
-		return;
+		return true;
 	}
 	// Etape 3
-	if(line[teteLecture] == EOF)
+	if(line[teteLecture] == EOF || line[teteLecture] == '$' || line[teteLecture] == '\0')
 	{
 		prochain=new Symbole((int)'$');
-		return;
+		return true;
 	}
-	cout << "lex erreur at : "<< line[teteLecture]<< "\t";
+	nbError++;
+	
+	cout << "\tlex erreur at : "<< line[teteLecture]<<endl;
+
+	return false;
 }
 

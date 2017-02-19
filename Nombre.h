@@ -7,7 +7,7 @@ class Nombre : public Symbole {
 		int value;
 	public :
 		Nombre (int valeur) : Symbole((int)'n'), value(valeur) {}
-		void print() { cout << (char) value;}
+		void print() { std::cout << value;}
 };
 
 #endif

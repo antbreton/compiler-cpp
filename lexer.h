@@ -10,16 +10,20 @@ using namespace std;
 class lexer
 {
 	public :
-		deque<Symbole> lecture();
+		deque<Symbole*>* lecture();
 		lexer(std::string flux);
-		void checkNext();
+		~lexer();
+		bool checkNext();
+		int getNbError() { return nbError; }
+		
 	private :
 		std::string line;
 		Symbole * prochain;
-		bool ok;
-		void next();
+		int nbError;
+		bool next();
 		void shift();
 		int teteLecture;
+		deque<Symbole*>* expression;
 };
 
 #endif
