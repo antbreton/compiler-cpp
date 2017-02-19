@@ -74,7 +74,7 @@ bool Automate::analyse()
 	if(accepted)
 		cout << endl << endl << GREEN << "Accepted" << RESET << endl<<endl;
 				
-	return true;
+	return accepted;
 }
 
 
@@ -96,7 +96,10 @@ void Automate::pop_destroy_symbol()
 	symboleStack->pop_back();
 }
 
-		
+void Automate::calculate()
+{
+	cout << GREEN << "\tResult :" << ((Expr *) symboleStack->front())->eval()<<RESET << endl ;
+}		
 
 // Display state of the controller
 void Automate::displayState()

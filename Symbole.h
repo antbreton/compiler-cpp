@@ -20,13 +20,14 @@ class Nombre : public Symbole {
 	public :
 		Nombre (int valeur) : Symbole((int)'n'), value(valeur) {}
 		void print() { std::cout << value;}
-	//	virtual std::string getPrint() { std::string res=""+value; return res;}
+		int getValue() { return value; }
 };
 
 class Expr : public Symbole {
 	public:
 		Expr():Symbole('E') {}
 		virtual ~Expr() {}	
+		virtual double eval () = 0;
 };
 
 
@@ -38,6 +39,7 @@ class ExprPlus : public Expr
 		
 	public:
 		ExprPlus(Expr *e1,Expr *e2): e1(e1), e2(e2) {}
+		virtual double eval (){ return e1->eval()+e2->eval(); }
 };
 
 class ExprMul : public Expr
@@ -48,6 +50,17 @@ class ExprMul : public Expr
 		
 	public:
 		ExprMul(Expr *e1,Expr *e2): e1(e1), e2(e2) {}
+		virtual double eval (){ return e1->eval()*e2->eval(); }
+};
+
+class ExprVal : public Expr
+{
+	protected :
+		int val;
+	
+	public :
+		ExprVal(int val):val(val) {}
+		virtual double eval (){ return val; }
 };
 
 #endif

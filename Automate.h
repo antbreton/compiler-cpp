@@ -27,6 +27,7 @@ class Automate
 		
 		// Fonction qui effectue l'analyse syntaxique
 		bool analyse();
+		void calculate();
 		
 		// Affiche la pile d'etats sur cout
 		void displayState();

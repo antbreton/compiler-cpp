@@ -38,7 +38,12 @@ int main(int argv, char ** args)
 						
 	cout << "Step 2 : Syntax analysis" << endl;
 	Automate automate(q);
-	automate.analyse();
+	
+	if(!automate.analyse()) { return 1; } // On s'arrête s'il y a une erreur
+	
+	// Sinon on affiche le résultat
+	cout << "Step 3 : Result" << endl;
+	automate.calculate();
 	
 	return 0;
 }

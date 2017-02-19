@@ -85,49 +85,50 @@ bool E3::transitions(Automate * automate, Symbole * s)
 	switch(*s)
 		{
 			case (int)'+':
+			{
 				// on ne consume pas le symbole
 				automate->push_lexer(s);
 				
-				automate->pop_destroy_symbol();
+				Nombre * n = (Nombre *)automate->pop_symbol();
 				
 				cout << "reduction" << endl;
 				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
-				automate->reduction(1, new Expr);
-			break;	
-
+				automate->reduction(1, new ExprVal(n->getValue()));
+				break;	
+			}
 			case (int)'*':
-				// on ne consume pas le symbole
+			{	// on ne consume pas le symbole
 				automate->push_lexer(s);
 				
-				automate->pop_destroy_symbol();
+				Nombre * n = (Nombre *)automate->pop_symbol();
 				
 				cout << "reduction" << endl;
 				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
-				automate->reduction(1, new Expr);
-			break;	
-		
+				automate->reduction(1, new ExprVal(n->getValue()));
+				break;	
+			}
 			case (int)')':
-				// on ne consume pas le symbole
+			{	// on ne consume pas le symbole
 				automate->push_lexer(s);
 				
-				
-				automate->pop_destroy_symbol();
+				Nombre * n = (Nombre *)automate->pop_symbol();
 				
 				cout << "reduction" << endl;
 				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
-				automate->reduction(1, new Expr);
-			break;	
-			
+				automate->reduction(1, new ExprVal(n->getValue()));
+				break;	
+			}
 			case (int)'$':
-				// on ne consume pas le symbole
+			{	// on ne consume pas le symbole
 				automate->push_lexer(s);
 				
-				automate->pop_destroy_symbol();
+				Nombre * n = (Nombre *)automate->pop_symbol();
 				
 				cout << "reduction" << endl;
 				// règle de réduction 5 : on remplace la valeur par E, et on pop de 1				
-				automate->reduction(1, new Expr);
-			break;		
+				automate->reduction(1, new ExprVal(n->getValue()));
+				break;		
+			}
 									
 			default:
 				automate->erreur = true;
