@@ -12,7 +12,7 @@ class Etat
 		virtual ~Etat() {}
 		void print() const;
 		virtual bool transitions(Automate * automate, Symbole * s) = 0;
-	
+		std::string getName(){ return name;}
 	protected :
 		std::string name;
 };

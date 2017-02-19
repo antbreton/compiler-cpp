@@ -1,5 +1,4 @@
 #include "lexer.h"
-#include "Nombre.h"
 #include <stdlib.h>    /* atoi */
 #include <iostream>
 #include <cstdio>
@@ -72,7 +71,7 @@ bool lexer::checkNext()
 		return true;
 	}
 	// Etape 3
-	if(line[teteLecture] == EOF)
+	if(line[teteLecture] == EOF || line[teteLecture] == '$')
 	{
 		prochain=new Symbole((int)'$');
 		return true;
