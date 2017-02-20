@@ -44,5 +44,6 @@ run the executable
 
 then type an expression
 > Step 0 : Type a line
+
 >		((1+1)\*5)\*2
 
